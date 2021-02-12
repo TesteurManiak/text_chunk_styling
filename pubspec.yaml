@@ -1,7 +1,8 @@
 name: text_chunk_styling
 description: Flutter package which allows to style specific parts of a String.
 version: 1.0.0
-homepage:
+homepage: https://github.com/TesteurManiak/text_chunk_styling
+repository: https://github.com/TesteurManiak/text_chunk_styling
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
