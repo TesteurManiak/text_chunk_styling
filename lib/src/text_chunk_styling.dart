@@ -153,7 +153,7 @@ class TextChunkStyling extends StatelessWidget {
       overflow: overflow,
       softWrap: softWrap,
       textDirection: textDirection ?? Directionality.of(context),
-      locale: locale ?? Localizations.localeOf(context, nullOk: true),
+      locale: locale ?? Localizations.localeOf(context),
       textScaleFactor: textScaleFactor,
       maxLines: maxLines,
       textWidthBasis: textWidthBasis,
