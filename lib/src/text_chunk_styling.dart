@@ -17,7 +17,7 @@ class TextChunkStyling extends StatelessWidget {
   /// If the style's "inherit" property is true, the style will be merged with
   /// the closest enclosing [DefaultTextStyle]. Otherwise, the style will
   /// replace the closest enclosing [DefaultTextStyle].
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   /// Style to apply to the highlighted text.
   final TextStyle highlightTextStyle;
@@ -47,7 +47,7 @@ class TextChunkStyling extends StatelessWidget {
   ///
   /// Defaults to the ambient [Directionality], if any. If there is no ambient
   /// [Directionality], then this must not be null.
-  final TextDirection textDirection;
+  final TextDirection? textDirection;
 
   /// Used to select a font when the same Unicode character can
   /// be rendered differently, depending on the locale.
@@ -56,7 +56,7 @@ class TextChunkStyling extends StatelessWidget {
   /// is inherited from the enclosing app with `Localizations.localeOf(context)`.
   ///
   /// See [RenderParagraph.locale] for more information.
-  final Locale locale;
+  final Locale? locale;
 
   /// The number of font pixels for each logical pixel.
   ///
@@ -70,20 +70,20 @@ class TextChunkStyling extends StatelessWidget {
   ///
   /// If this is 1, text will not wrap. Otherwise, text will be wrapped at the
   /// edge of the box.
-  final int maxLines;
+  final int? maxLines;
 
   /// {@macro flutter.painting.textPainter.textWidthBasis}
   final TextWidthBasis textWidthBasis;
 
-  final StrutStyle strutStyle;
+  final StrutStyle? strutStyle;
 
   TextChunkStyling({
-    Key key,
-    @required this.text,
-    @required List<String> highlightText,
+    Key? key,
+    required this.text,
+    required List<String> highlightText,
     this.caseSensitive = true,
     this.textStyle,
-    @required this.highlightTextStyle,
+    required this.highlightTextStyle,
     this.textAlign = TextAlign.start,
     this.overflow = TextOverflow.clip,
     this.softWrap = true,
@@ -93,14 +93,7 @@ class TextChunkStyling extends StatelessWidget {
     this.maxLines,
     this.textWidthBasis = TextWidthBasis.parent,
     this.strutStyle,
-  })  : assert(text != null),
-        assert(textAlign != null),
-        assert(overflow != null),
-        assert(softWrap != null),
-        assert(highlightText != null && highlightText.isNotEmpty),
-        assert(caseSensitive != null),
-        assert(textScaleFactor != null),
-        assert(highlightTextStyle != null),
+  })  : assert(highlightText.isNotEmpty),
         assert(maxLines == null || maxLines > 0),
         this.highlightText = highlightText
             .map((e) => caseSensitive ? e : e.toLowerCase())
@@ -113,8 +106,8 @@ class TextChunkStyling extends StatelessWidget {
 
     // Define used TextStyle for classicText.
     final defaultTextStyle = DefaultTextStyle.of(context);
-    TextStyle effectiveTextStyle = textStyle;
-    if (textStyle == null || textStyle.inherit)
+    TextStyle? effectiveTextStyle = textStyle;
+    if (textStyle == null || textStyle!.inherit)
       effectiveTextStyle = defaultTextStyle.style.merge(textStyle);
 
     final pattern =
