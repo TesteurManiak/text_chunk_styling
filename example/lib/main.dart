@@ -42,6 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
             highlightText: ['sum', 'ing', 'mod', 'ris', 'nam'],
             highlightTextStyle:
                 TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            multiTextStyles: [
+              TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.amber, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.cyan, fontWeight: FontWeight.bold),
+            ],
           ),
         ),
       ),

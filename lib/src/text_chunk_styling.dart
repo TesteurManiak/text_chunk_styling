@@ -19,8 +19,15 @@ class TextChunkStyling extends StatelessWidget {
   /// replace the closest enclosing [DefaultTextStyle].
   final TextStyle? textStyle;
 
-  /// Style to apply to the highlighted text.
-  final TextStyle highlightTextStyle;
+  /// Style to apply to the all elements of [highlightText].
+  final TextStyle? highlightTextStyle;
+
+  /// Multiple styles to apply to the text.
+  /// Each element in this list correspond to the style to apply at the same
+  /// index of [highlightText].
+  ///
+  /// This list must be the same length as [highlightText].
+  final List<TextStyle> multiTextStyles;
 
   /// How the text should be aligned horizontally.
   final TextAlign textAlign;
@@ -83,7 +90,8 @@ class TextChunkStyling extends StatelessWidget {
     required List<String> highlightText,
     this.caseSensitive = true,
     this.textStyle,
-    required this.highlightTextStyle,
+    this.highlightTextStyle,
+    this.multiTextStyles = const [],
     this.textAlign = TextAlign.start,
     this.overflow = TextOverflow.clip,
     this.softWrap = true,
@@ -95,10 +103,18 @@ class TextChunkStyling extends StatelessWidget {
     this.strutStyle,
   })  : assert(highlightText.isNotEmpty),
         assert(maxLines == null || maxLines > 0),
+        assert(
+          highlightTextStyle == null || multiTextStyles.isEmpty,
+          'Cannot provide both highlightTextStyle and multiTextStyles',
+        ),
         this.highlightText = highlightText
             .map((e) => caseSensitive ? e : e.toLowerCase())
             .toList(),
-        super(key: key);
+        super(key: key) {
+    if (multiTextStyles.isNotEmpty) {
+      assert(multiTextStyles.length == highlightText.length);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +156,11 @@ class TextChunkStyling extends StatelessWidget {
       }
     }
 
+    final _highlightTextStyles = highlightTextStyle != null
+        ? List<TextStyle>.generate(
+            highlightText.length, (_) => highlightTextStyle!)
+        : multiTextStyles;
+
     return RichText(
       strutStyle: strutStyle,
       textAlign: textAlign,
@@ -155,7 +176,7 @@ class TextChunkStyling extends StatelessWidget {
             .map<TextSpan>((e) => TextSpan(
                   text: e,
                   style: highlightText.contains(e.toLowerCase())
-                      ? highlightTextStyle
+                      ? _highlightTextStyles[highlightText.indexOf(e)]
                       : effectiveTextStyle,
                 ))
             .toList(),
