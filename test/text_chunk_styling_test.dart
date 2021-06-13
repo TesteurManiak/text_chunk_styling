@@ -11,8 +11,8 @@ void main() {
         expect(
           () => TextChunkStyling(
             text: '',
-            highlightText: [''],
-            highlightTextStyle: TextStyle(),
+            highlightText: const [''],
+            highlightTextStyle: const TextStyle(),
             maxLines: -1,
           ),
           throwsAssertionError,
@@ -23,9 +23,9 @@ void main() {
         expect(
           () => TextChunkStyling(
             text: '',
-            highlightText: [''],
-            highlightTextStyle: TextStyle(),
-            multiTextStyles: [TextStyle()],
+            highlightText: const [''],
+            highlightTextStyle: const TextStyle(),
+            multiTextStyles: const [TextStyle()],
           ),
           throwsAssertionError,
         );
@@ -35,8 +35,8 @@ void main() {
         expect(
           () => TextChunkStyling(
             text: '',
-            highlightText: [''],
-            multiTextStyles: [TextStyle(), TextStyle()],
+            highlightText: const [''],
+            multiTextStyles: const [TextStyle(), TextStyle()],
           ),
           throwsAssertionError,
         );
@@ -51,12 +51,12 @@ void main() {
         MaterialApp(
           debugShowCheckedModeBanner: false,
           home: Scaffold(
-            body: Container(
+            body: SizedBox(
               child: TextChunkStyling(
                 text:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat purus, sollicitudin et velit sed, suscipit euismod ipsum. Etiam ultricies purus a nunc condimentum, sollicitudin mollis tortor maximus. Phasellus fringilla augue a leo molestie feugiat. Donec eget nisi vel metus rhoncus ultricies. Donec non semper mi. Suspendisse dictum orci molestie libero vehicula, ut faucibus massa luctus. Etiam sit amet urna tristique, ullamcorper ex at, feugiat ipsum. Mauris ut leo quis magna tempus euismod. Nam euismod mauris quam, quis iaculis ligula ornare quis. Nunc egestas urna ac mauris consequat, id tincidunt justo iaculis. Ut posuere risus elit, vel facilisis nulla lobortis non.',
-                highlightText: ['sum', 'ing', 'mod', 'ris', 'nam'],
-                highlightTextStyle: TextStyle(
+                highlightText: const ['sum', 'ing', 'mod', 'ris', 'nam'],
+                highlightTextStyle: const TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Roboto',
@@ -75,12 +75,12 @@ void main() {
         MaterialApp(
           debugShowCheckedModeBanner: false,
           home: Scaffold(
-            body: Container(
+            body: SizedBox(
               child: TextChunkStyling(
                 text:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat purus, sollicitudin et velit sed, suscipit euismod ipsum. Etiam ultricies purus a nunc condimentum, sollicitudin mollis tortor maximus. Phasellus fringilla augue a leo molestie feugiat. Donec eget nisi vel metus rhoncus ultricies. Donec non semper mi. Suspendisse dictum orci molestie libero vehicula, ut faucibus massa luctus. Etiam sit amet urna tristique, ullamcorper ex at, feugiat ipsum. Mauris ut leo quis magna tempus euismod. Nam euismod mauris quam, quis iaculis ligula ornare quis. Nunc egestas urna ac mauris consequat, id tincidunt justo iaculis. Ut posuere risus elit, vel facilisis nulla lobortis non.',
-                highlightText: ['sum', 'ing', 'mod', 'ris', 'nam'],
-                multiTextStyles: [
+                highlightText: const ['sum', 'ing', 'mod', 'ris', 'nam'],
+                multiTextStyles: const [
                   TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,

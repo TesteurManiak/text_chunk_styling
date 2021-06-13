@@ -107,7 +107,7 @@ class TextChunkStyling extends StatelessWidget {
           highlightTextStyle == null || multiTextStyles.isEmpty,
           'Cannot provide both highlightTextStyle and multiTextStyles',
         ),
-        this.highlightText = highlightText
+        highlightText = highlightText
             .map((e) => caseSensitive ? e : e.toLowerCase())
             .toList(),
         super(key: key) {
@@ -123,21 +123,25 @@ class TextChunkStyling extends StatelessWidget {
     // Define used TextStyle for classicText.
     final defaultTextStyle = DefaultTextStyle.of(context);
     TextStyle? effectiveTextStyle = textStyle;
-    if (textStyle == null || textStyle!.inherit)
+    if (textStyle == null || textStyle!.inherit) {
       effectiveTextStyle = defaultTextStyle.style.merge(textStyle);
+    }
 
     final pattern =
-        RegExp('${highlightText.join("|")}', caseSensitive: caseSensitive);
+        RegExp(highlightText.join("|"), caseSensitive: caseSensitive);
     final startWithPattern = text.startsWith(pattern);
     final classicText = text.split(pattern)..removeWhere((e) => e.isEmpty);
 
     // Create a string separator to isolate the text to highlight.
-    String strSeparator = '*';
-    while (text.contains(strSeparator)) strSeparator += '*';
+    final strSeparator = StringBuffer('*');
+    while (text.contains(strSeparator.toString())) {
+      strSeparator.write('*');
+    }
     final textToHighlight = text
         .splitMapJoin(pattern,
-            onMatch: (m) => '${m.group(0)}', onNonMatch: (_) => strSeparator)
-        .split(strSeparator)
+            onMatch: (m) => m.group(0)!,
+            onNonMatch: (_) => strSeparator.toString())
+        .split(strSeparator.toString())
           ..removeWhere((e) => e.isEmpty);
 
     // Combine the two list in correct order
@@ -150,8 +154,9 @@ class TextChunkStyling extends StatelessWidget {
     } else {
       for (int i = 0; i < classicText.length; i++) {
         if (i < classicText.length) combined.add(classicText.elementAt(i));
-        if (i < textToHighlight.length)
+        if (i < textToHighlight.length) {
           combined.add(textToHighlight.elementAt(i));
+        }
       }
     }
 
