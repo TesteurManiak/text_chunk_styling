@@ -37,7 +37,8 @@ class TextChunkStyling extends StatelessWidget {
 
   /// Whether the text should break at soft line breaks.
   ///
-  /// If false, the glyphs in the text will be positioned as if there was unlimited horizontal space.
+  /// If false, the glyphs in the text will be positioned as if there was
+  /// unlimited horizontal space.
   final bool softWrap;
 
   /// The directionality of the text.
@@ -120,50 +121,43 @@ class TextChunkStyling extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(textDirection != null || debugCheckHasDirectionality(context));
 
-    // Define used TextStyle for classicText.
+    // Define used TextStyle for non-highlighted text.
     final defaultTextStyle = DefaultTextStyle.of(context);
     TextStyle? effectiveTextStyle = textStyle;
     if (textStyle == null || textStyle!.inherit) {
       effectiveTextStyle = defaultTextStyle.style.merge(textStyle);
     }
 
-    final pattern =
-        RegExp(highlightText.join("|"), caseSensitive: caseSensitive);
-    final startWithPattern = text.startsWith(pattern);
-    final classicText = text.split(pattern)..removeWhere((e) => e.isEmpty);
-
-    // Create a string separator to isolate the text to highlight.
-    final strSeparator = StringBuffer('*');
-    while (text.contains(strSeparator.toString())) {
-      strSeparator.write('*');
-    }
-    final textToHighlight = text
-        .splitMapJoin(pattern,
-            onMatch: (m) => m.group(0)!,
-            onNonMatch: (_) => strSeparator.toString())
-        .split(strSeparator.toString())
-          ..removeWhere((e) => e.isEmpty);
-
-    // Combine the two list in correct order
-    final combined = <String>[];
-    if (startWithPattern) {
-      for (int i = 0; i < textToHighlight.length; i++) {
-        combined.add(textToHighlight.elementAt(i));
-        if (i < classicText.length) combined.add(classicText.elementAt(i));
-      }
-    } else {
-      for (int i = 0; i < classicText.length; i++) {
-        if (i < classicText.length) combined.add(classicText.elementAt(i));
-        if (i < textToHighlight.length) {
-          combined.add(textToHighlight.elementAt(i));
-        }
-      }
-    }
-
+    // Define used TextStyle for highlighted text.
     final _highlightTextStyles = highlightTextStyle != null
         ? List<TextStyle>.generate(
             highlightText.length, (_) => highlightTextStyle!)
         : multiTextStyles;
+
+    final pattern =
+        RegExp(highlightText.join("|"), caseSensitive: caseSensitive);
+
+    final _texts = <TextSpan>[];
+    var i = 0, j = 0;
+    while ((j = text.indexOf(pattern, i)) != -1) {
+      if (j > i) _texts.add(TextSpan(text: text.substring(i, j)));
+      final currentText = text.substring(j);
+      late final String what;
+      for (final e in highlightText) {
+        if (currentText.startsWith(RegExp(e, caseSensitive: caseSensitive))) {
+          what = e;
+          break;
+        }
+      }
+      _texts.add(
+        TextSpan(
+          text: text.substring(j, j + what.length),
+          style: _highlightTextStyles[highlightText.indexOf(what)],
+        ),
+      );
+      i = j + what.length;
+    }
+    if (i < text.length) _texts.add(TextSpan(text: text.substring(i)));
 
     return RichText(
       strutStyle: strutStyle,
@@ -175,16 +169,7 @@ class TextChunkStyling extends StatelessWidget {
       textScaleFactor: textScaleFactor,
       maxLines: maxLines,
       textWidthBasis: textWidthBasis,
-      text: TextSpan(
-        children: combined
-            .map<TextSpan>((e) => TextSpan(
-                  text: e,
-                  style: highlightText.contains(e.toLowerCase())
-                      ? _highlightTextStyles[highlightText.indexOf(e)]
-                      : effectiveTextStyle,
-                ))
-            .toList(),
-      ),
+      text: TextSpan(children: _texts, style: effectiveTextStyle),
     );
   }
 }
