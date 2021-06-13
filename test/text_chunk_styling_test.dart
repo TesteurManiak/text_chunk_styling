@@ -7,6 +7,18 @@ import 'package:text_chunk_styling/text_chunk_styling.dart';
 void main() {
   group('Arguments', () {
     group('assert', () {
+      test('Cannot provide a negative maxLines', () {
+        expect(
+          () => TextChunkStyling(
+            text: '',
+            highlightText: [''],
+            highlightTextStyle: TextStyle(),
+            maxLines: -1,
+          ),
+          throwsAssertionError,
+        );
+      });
+
       test('Cannot provide both highlightTextStyle and multiTextStyles', () {
         expect(
           () => TextChunkStyling(

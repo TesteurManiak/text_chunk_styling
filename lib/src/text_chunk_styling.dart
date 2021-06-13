@@ -144,8 +144,7 @@ class TextChunkStyling extends StatelessWidget {
     final combined = <String>[];
     if (startWithPattern) {
       for (int i = 0; i < textToHighlight.length; i++) {
-        if (i < textToHighlight.length)
-          combined.add(textToHighlight.elementAt(i));
+        combined.add(textToHighlight.elementAt(i));
         if (i < classicText.length) combined.add(classicText.elementAt(i));
       }
     } else {

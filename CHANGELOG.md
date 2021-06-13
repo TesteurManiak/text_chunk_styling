@@ -1,3 +1,8 @@
+## [2.0.1] - 13/06/2021
+
+* Added property `multiTextStyles` to apply multiple `TextStyle`.
+* Added dev_dependency to `golden_toolkit` to create unit tests.
+
 ## [2.0.0] - 26/03/2021
 
 * **Breaking Changes**: Migration to nullsafety
