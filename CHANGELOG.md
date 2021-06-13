@@ -2,6 +2,7 @@
 
 * Added property `multiTextStyles` to apply multiple `TextStyle`.
 * Added dev_dependency to `golden_toolkit` to create unit tests.
+* Fixed text parsing issues.
 
 ## [2.0.0] - 26/03/2021
 
