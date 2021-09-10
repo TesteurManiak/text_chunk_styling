@@ -35,6 +35,6 @@ TextChunkStyling(
 
 ### Result
 
-![Screenshot](test/goldens/style_2.png)
+![Screenshot](https://raw.githubusercontent.com/TesteurManiak/text_chunk_styling/main/test/goldens/style_2.png)
 
 Find the full example in `example/`
