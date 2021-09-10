@@ -1,3 +1,9 @@
+## [2.0.2] - 10/09/2021
+
+* Updated `golden_toolkit` dev dependency to `^0.10.0`
+* Fixed build error due to `flutter: null` in `pubspec.yaml`
+* Added golden tests
+
 ## [2.0.1] - 13/06/2021
 
 * Added property `multiTextStyles` to apply multiple `TextStyle`.
