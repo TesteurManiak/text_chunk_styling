@@ -30,6 +30,9 @@
 .pub/
 build/
 
+# Golden files
+test/failures/
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
